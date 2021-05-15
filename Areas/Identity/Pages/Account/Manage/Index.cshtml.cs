@@ -21,6 +21,8 @@ namespace MyWeb.Areas.Identity.Pages.Account.Manage
             _userManager = userManager;
             _signInManager = signInManager;
         }
+        [BindProperty]
+        public string PathName { get; set; }
 
         public string Username { get; set; }
 
@@ -36,6 +38,9 @@ namespace MyWeb.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
             public string Gender { get; set; }
+
+            [Display(Name = "Profile Picture")]
+            public byte[] ProfilePicture { get; set; }
         }
 
         private async Task LoadAsync(IdentityUser user)
@@ -43,14 +48,12 @@ namespace MyWeb.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
-           var principal = await _userManager.GetUserAsync(User);
-            
-
             Username = userName;
 
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber
+
             };
         }
 
@@ -63,6 +66,9 @@ namespace MyWeb.Areas.Identity.Pages.Account.Manage
             }
 
             await LoadAsync(user);
+
+            PathName = "a2";
+
             return Page();
         }
 
